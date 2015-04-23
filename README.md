@@ -4,12 +4,12 @@ This is the Weatherlib site source code. If you want to improve the site you can
 a request.
 Feel free to add:
 
-..*pages
-..*examples
-..*source code
-..*modify the pages
-..*correct errors
-..*Add new layout
+*pages
++examples
++source code
++modify the pages
++correct errors
++Add new layout
 
 All contributions are welcome!!
 
