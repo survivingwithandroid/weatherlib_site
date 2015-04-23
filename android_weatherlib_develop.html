@@ -1,0 +1,56 @@
+---
+layout: weather_layout
+backPage:
+backPageLink:
+nextPage:
+nextPageLink:
+bgColor: FFBF00
+title: Developer 
+descr: "Do you want to develop an android weather app?. Read this tutorial and you can find all the information to create and android app. Here you can find source code about android weather"
+---
+          
+<h2 id="starthere">Getting started</h2>
+If you come here, you are a developer that wants to extend the library and add some new features.<br/>
+The first step of course is downloading the source code and you can do it following github guide.
+Once you have the code you can extend the library in several areas:
+<br/>
+<br/>
+<ul>
+  <li>Add new features</li>
+  <li>Add new weather provider</li>
+  <li>Add new transport layer</li>
+  <li>Custom icons</li>
+  <li>Custom UI components</li>
+</ul>
+
+<h2>Add new feature</h2>
+Even if <strong>Android Weatherlib</strong> supports several features and several weather providers, there is of course space for 
+adding new features. By now the main features are supported like <strong>Current Weather</strong>, <strong>Forecast</strong>, <strong>Historical Data</strong>, and of course if you want to add new features you can improve the library. Keep in mind that
+you should provide all weather provider implementation, or if one or more provider doesn't support this feature you should throw UnsupportedException.
+<h2>Add new weather provider</h2>
+If you want to add a new weather provider the first thing you have to do is implementing <em>IWeatherProvider</em>.
+In this class, you have to implement specific protocol details and parse the response extracting the data from the response itself.
+In this class, you don't have to worry about network implementation because it is already implemented in the <em>transport layer</em>.
+Other that the specific class that parses the response you have to implement other two classes:
+<br/>
+<ul>
+   <li>One that implements <em>IProviderType</em></li>
+   <li>One that implements <em>IWeatherCodeProvider</em></li>
+</ul>
+<br/>
+The first class, that implements <em>IProviderType</em> that is used to return the FQN of the classes that have to be instantiated.
+For example in the case of <strong>Openweathermap</strong> the class is:
+<br/><br/>
+<pre class="prettyprint">
+public class YahooProviderType implements IProviderType {
+    @Override
+    public String getProviderClass() {
+        return "com.survivingwithandroid.weather.lib.provider.yahooweather.YahooWeatherProvider";
+    }
+
+    @Override
+    public String getCodeProviderClass() {
+        return "com.survivingwithandroid.weather.lib.provider.yahooweather.YahooWeatherCodeProvider";
+    }
+}
+</pre>

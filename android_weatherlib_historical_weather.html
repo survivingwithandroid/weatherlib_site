@@ -1,0 +1,78 @@
+---
+layout: weather_layout
+backPage: Weather forecast
+backPageLink: forecast.html
+nextPage: Extended feature
+nextPageLink: extended_features.html
+bgColor: 3F51B5
+title: Weather historical data
+topic: Historical weather data
+descr: "You can get android weather historical data using the app. In this tutorial you have a detailed example how to create
+and android app to get weather data"
+---
+<h2>Introduction</h2>
+This feature of <strong>Android Weatherlib</strong> helps you to get <em>historical weather</em>.
+<br/>
+The <em>Daily forecast</em> features is supported by:<br/><br/>
+
+    <table class="table_support">
+      <tr> 
+        <td><strong>Openweathermap</strong></td>
+        <td><font class="ok_support">Yes</font></td>
+      </tr>
+      <tr>
+        <td><strong>Weatherunderground<br/>Weather.com</strong></td>
+         <td><font class="ok_support">Yes</font></td>
+      </tr>
+      <tr>
+        <td><strong>Yahoo! Weather</strong></td>
+        <td><font class="no_support">NO</font></td>
+      </tr>
+      <tr>
+        <td><strong>Forecast.io</strong></td>
+         <td><font class="no_support">NO</font></td>
+      </tr>
+    </table>
+<br>
+Be aware this feature is not supported by all the provider managed by Weatherlib.
+<br/>
+<h2>Get Historical Weather in Android</h2>
+Always let us suppose, you have already <em>city id</em>, then:
+<br/>
+<pre class="prettyprint">
+       weatherClient.getHistoricalWeather(new WeatherRequest(cityId), 
+                      new Date(), // Start date,
+                      new Date(), //end date
+                      new WeatherClient.HistoricalWeatherEventListener() {
+            @Override
+            public void onWeatherRetrieved(HistoricalWeather historicalWeather) {
+                
+            }
+
+            @Override
+            public void onWeatherError(WeatherLibException e) {
+
+            }
+
+            @Override
+            public void onConnectionError(Throwable throwable) {
+
+            }
+        });
+</pre><br/>
+In this case, the method accepts two <em>java.util.Date</em>. These dates represent the time interval 
+to use when querying the <strong>historical weather information</strong>.
+<br/>
+Once we have our <em>HistoricalWeather</em> object, it is  possible to traverse it:
+<br/>
+<br/>
+<pre class="prettyprint">
+ List<HistoricalHourWeather> histData = historicalWeather.getHoistoricalData();
+ for (HistoricalHourWeather histHour : histData) {
+       Weather weather = histHour.weather;
+       long timestamp = histHour.timestamp;
+ }
+</pre>
+<br/>
+We can use the List containing the weather info to create an <strong>Android ListView</strong>, maybe
+coding a custom adapter.

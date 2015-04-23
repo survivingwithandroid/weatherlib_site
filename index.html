@@ -1,0 +1,63 @@
+---
+layout: weather_layout
+backPage: Home
+backPageLink: ./index.html
+nextPage: Getting started
+nextPageLink: start.html
+bgColor: #81BEF7
+descr: "This is an open source library to get weather information in Android. It supports several weather provider: Yahoo! Weather, Openweathermap, Weatherunderground, Weather.com and Forecast.io. You can get current weather conditions, forecast and historical weather data."
+---
+
+            <h3 id="overview">Overview</h3>
+			<p>
+			 <b>Weatherlib</b> is an Android library that helps developers to create weather app easily and fast. 
+			</p>
+			<div class="bs-callout-info">
+				<p>Weatherlib aggregates proprietary 3rd party weather APIs and presents those functions through a <b>simple</b>, <b>unified</b>, <b>normalized API</b>.
+				By aggregating and normalizing 3rd party APIs, Weatherlib creates a single access point to those weather services without concern for service and API changes.
+				The library can connect to several weather provider using a specific protocol and it can create the right request according to the weather provider and parse the response.
+				The library abstracts 3rd party protocol implementation providing the weather information in the same way indipendently from the weather provider chosen.</p>
+			</div>
+			<div style="text-align: center;"><img title="Weatherlib weather aggregator" style="width: 500px; height: 324px;" src="images/weatherlib_aggregator.png" alt="Weatherlib weather aggregator">
+			</div><p>
+			 With this lib you can focus your mind only on the app development without worrying about extracting information from weather provider or handling request/response.&nbsp;
+			 </p>
+			
+            <h3 id="features">Main features</h3>
+			<p>
+			  These are the main features provided by the WeatherLib:
+			  </p><ul>
+			   <li>
+				Remote weather service invocation
+			  </li>
+			  <li>
+Handling HTTP requests and response in a separate thread respect to the main Android thread, so that you don't have to worry about ANR (Application Not Responding) problems</li>
+<li>
+Implement specific protocol to extract information from remote weather server</li>
+<li>Querying the city using name pattern</li>
+<li>Querying the city using geographic coordinates</li>
+<li>Querying actual weather condition</li>
+<li>Querying forecast weather condition</li>
+<li>Querying historical weather condition</li>
+<li>Retrieve default weather condition icon for each weather provider</li>
+<li>Abstract app implementation from the specific weather provider selected, so that you can reuse the same app with different weather provider</li>
+<li>Handling connection errors and parsing errors</li>
+<li>Implementing a notifition/listener mechanism so that your requests don't get locked while the library is processing the response or while the server is contacted</li>
+<li>Getting radar images</li>
+<li>Getting specific weather provider feature (like webcams and so on)</li>
+<li>Support the most used Android HTTP library (like Android Volley, OkHttp and so on)</li>
+<li>You can easily extend the lib and implement your weather provider</li>
+</ul>
+<p></p>
+
+            <h3 id="providers">Supported Weather provider</h3>
+			<p>
+				The library supports the following weather provider
+
+				</p><ul>
+				  <li><a href="http://www.openweathermap.org" target="_blank">Openweathermap</a></li>
+				  <li><a href="http://www.wunderground.com/weather/api" target="_blank">Weather Underground / Weather.com<br></a></li>
+<a href="http://www.wunderground.com/weather/api" target="_blank">				  </a><li><a href="https://developer.yahoo.com/weather/" target="_blank">Yahoo! Weather</a></li>
+				  <li><a href="https://developer.forecast.io/" target="_blank">Forecast.io</a></li>
+				</ul><br><h3>Libray structure</h3>The library is built using a moduare structure so that each part can be changed and customized. The strucutre looks like the figure shown below:<br><br><div style="text-align: center;"><img style="width: 359px; height: 278px;" alt="WeatherLib structure" title="WeatherLib structure" src="images/weather_struct.png"><br><br><div style="text-align: justify;">As you can notice, the lib is made by three different layer:<br><ol><li>The client layer that exposes an uniform interface to the Android apps</li><li>The Weather provider that takes care to parse the proprietary protocol and normalize it showing a standard class model <br></li><li>The Transport layer that handles the HTTP connection details using specific libraries <br></li></ol>We will see in the next pages how we can use the library.<br></div>
+			</div><p></p>

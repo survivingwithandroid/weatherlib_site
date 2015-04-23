@@ -1,0 +1,70 @@
+
+<html>
+  
+  {% include header.html %}
+
+   <body data-target=".content-nav" >
+
+
+    <header style="background-color:#{{ page.bgColor }}">
+    
+    <ul class="nav nav-pills" style="background:#FFFFFF; width:100%">
+  <li role="presentation"><a href="./index.html">Home</a></li>
+  <li role="presentation"><a href="./android_weatherlib_start.html">Getting started</a></li>
+  <li role="presentation"><a href="./android_weatherlib_search_city.html">Documentation</a></li>
+  <li role="presentation"><a href="./javadoc/index.html">Javadoc</a></li>
+
+</ul>
+
+      <div class="container" >
+
+        <div class="row"  >
+		  <div class="span1" style="margin-top:5px">
+			<a href="https://plus.google.com/communities/117946761543584564970" target="_blank"><img class="img-circle" src="images/weatherlib_icon.png" alt="Weather library"/></a>
+		  </div>
+
+          <div class="span5">		    
+            <h1 style="text-shadow: 2px 2px 2px rgba(150, 150, 150, 1);">Weatherlib <br/> <font style="font-size:large; font-style:italic;">{{ page.topic}}</font></h1> 
+          </div>
+          <div class="span6">
+            <menu>
+              <ul>
+                <li><a href="#starthere" class="menu download">Latest version <strong>1.5.4</strong></a></li>
+                <li><a href="https://github.com/survivingwithandroid/WeatherLib" data-title="View GitHub Project" class="menu github"><img src="images/icon-github.png" alt="GitHub"/></a></li>               
+              </ul>
+            </menu>
+          </div>
+      </div>
+
+    </header>
+
+
+
+<section id="body">
+<div class="container">
+<div class="row">
+<div class="span12"> 
+<br/><br/></br/>{{ content }} </div>
+</div>
+</div>
+<div>
+<div class="row">
+<div class="span12">&nbsp;</div>
+</div>
+</div>
+<!-- Add next and back -->
+<div class="row" style="height: 80px;">
+<ul class="pager">
+  <li><a href="./android_weatherlib_{{ page.backPageLink}}">{{ page.backPage }}</a></li>
+  <li><a href="./android_weatherlib_{{ page.nextPageLink }}">{{ page.nextPage }}</a></li>
+</ul>
+</div>
+<div>
+<div class="row">
+<div class="span12">&nbsp;</div>
+</div>
+</div>
+{% include footer.html %} </div>
+</section>
+</body>
+</html>

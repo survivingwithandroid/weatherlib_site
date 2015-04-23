@@ -1,0 +1,133 @@
+---
+layout: weather_layout
+backPage: Get current weather
+backPageLink: current_weather.html
+nextPage: Historical weather
+nextPageLink: historical_weather.html
+bgColor: 3F51B5
+title: Forecast
+topic: Forecast
+---
+<h2>Introduction</h2>
+In this paragraph we will see how to get forecast.
+We can get <em>weather forecast in android</em> in two different ways:
+<ul>
+ <li>Next days forecast</li>
+ <li>Hourly forecast</li>
+</ul>
+<br/>
+<em>Weatherlib</em> supports both type of request.
+As told before, you have to use <em>WeatherRequest</em> to get weather forecast.
+</br>
+The <em>Daily forecast</em> features is supported by:<br/><br/>
+
+    <table class="table_support">
+      <tr> 
+        <td><strong>Openweathermap</strong></td>
+        <td><font class="ok_support">Yes</font></td>
+      </tr>
+      <tr>
+        <td><strong>Weatherunderground<br/>Weather.com</strong></td>
+         <td><font class="ok_support">Yes</font></td>
+      </tr>
+      <tr>
+        <td><strong>Yahoo! Weather</strong></td>
+        <td><font class="ok_support">Yes</font></td>
+      </tr>
+      <tr>
+        <td><strong>Forecast.io</strong></td>
+         <td><font class="ok_support">Yes</font></td>
+      </tr>
+    </table>
+
+<br/>
+<br/>
+The <em>Hourly forecast</em> features is supported by:<br/><br/>
+    <table class="table_support">
+      <tr> 
+        <td><strong>Openweathermap</strong></td>
+        <td><font class="ok_support">Yes</font></td>
+      </tr>
+      <tr>
+        <td><strong>Weatherunderground<br/>Weather.com</strong></td>
+         <td><font class="ok_support">Yes</font></td>
+      </tr>
+      <tr>
+        <td><strong>Yahoo! Weather</strong></td>
+        <td><font class="ok_support">Yes</font></td>
+      </tr>
+      <tr>
+        <td><strong>Forecast.io</strong></td>
+         <td><font class="ok_support">Yes</font></td>
+      </tr>
+    </table>
+<br/>
+<br/>
+<h2>Daily weather forecast</h2>
+Let us suppose we retrieved already the <em>city id</em> retrieved using <strong>search city</strong>.
+<br/>
+The code is very simple:<br/>
+<pre class="pretyprint">
+       weatherClient.getForecastWeather(new WeatherRequest(cityId), new WeatherClient.ForecastWeatherEventListener() {
+            @Override
+            public void onWeatherRetrieved(WeatherForecast forecast) {
+                // Data is ready
+            }
+
+            @Override
+            public void onWeatherError(WeatherLibException t) {
+
+            }
+
+            @Override
+            public void onConnectionError(Throwable t) {
+                //WeatherDialog.createErrorDialog("Error parsing data. Please try again", MainActivity.this);
+            }
+        });
+    }
+</pre>
+<br/>
+Once the data is ready, we can handle it. <em>WeatherForecast</em> holds the <strong>weather forecast</strong> represented as
+an <em>java List</em>.<br/>
+So we have:<br/>
+<pre class="prettyprint">
+List<DayForecast> dayForecastList = forecast.getForecast();
+</pre>
+<br/>
+Now we can traverse the <m>List</em>:
+<br/>
+<pre class="prettyprint">
+for (DayForecast dForecast : dayForecastList) {
+    Weather weather = dForecast.weather;
+    long timestamp = dForecast.timestamp;
+}
+</pre>
+<br/>
+where the <strong>Weather</strong> class represents the weather in they day specified by the timestamp. In the <em>onWeatherRetrieved</em>
+we can instantiate an <strong>Android custom adapter</strong> and fill a <em>Android Listview</em>.
+
+<h2>Hourly forecast</h2>
+The <em>hourly forecast</em> is used in the same way we used the day forecast.<br/>
+<pre class="prettyprint">
+       weatherClient.getHourForecastWeather(new WeatherRequest(cityId), new WeatherClient.HourForecastWeatherEventListener() {
+            @Override
+            public void onWeatherRetrieved(WeatherHourForecast weatherHourForecast) {
+                List<HourForecast> hourList = weatherHourForecast.getHourForecast();
+                for (HourForecast hourForecast: hourList) {
+                    Weather weather = hourForecast.weather;
+                    long timestamp = hourForecast.timestamp;
+                }
+            }
+
+            @Override
+            public void onWeatherError(WeatherLibException e) {
+
+            }
+
+            @Override
+            public void onConnectionError(Throwable throwable) {
+
+            }
+        });
+ </pre>
+ 

@@ -1,0 +1,115 @@
+---
+layout: weather_layout
+backPage: Search city
+backPageLink: search_city.html
+nextPage: Weather forecast
+nextPageLink: forecast.html
+bgColor: 3F51B5
+title: Get current weather
+topic: Get current weather
+descr: "Do you want to develo an android weather app to get the current weather condition using the most known weather provider:Yahoo! Weather, Openweathermap, Weatherunderground, Weather.com or Forecast.io? Follow this tutorial and you can create and full android weather app"
+---
+<h2>Introduction</h2>
+In this paragraph we will see how to get current weather conditions.
+Weatherlib helps you to get weather condition<br>
+creating weather data model indipendently from the weather provider you
+used.<br>
+You can query the current weather condition using city id, retrieved
+using search city, or using latitude and longitude. The library will
+check the way you are querying the condition and choses the right
+remote service to invoke.<br>
+Notice that city id has the precedence respect to geo coords, so if you
+create a request, using <code>WeatherRequest</code>, holding both
+information, the
+library will select the city id to create the query.<br>
+<br>
+The <em>Current weather</em> features is supported by:<br/><br/>
+    <table class="table_support">
+      <tr> 
+        <td><strong>Openweathermap</strong></td>
+        <td><font class="ok_support">Yes</font></td>
+      </tr>
+      <tr>
+        <td><strong>Weatherunderground<br/>Weather.com</strong></td>
+         <td><font class="ok_support">Yes</font></td>
+      </tr>
+      <tr>
+        <td><strong>Yahoo! Weather</strong></td>
+        <td><font class="ok_support">Yes</font></td>
+      </tr>
+      <tr>
+        <td><strong>Forecast.io</strong></td>
+         <td><font class="ok_support">Yes</font></td>
+      </tr>
+    </table>
+<h2>Get current weather by city id</h2>
+If you want to get current weather condition using city id, first you
+have to create the WeatherRequest:<br>
+<br>
+<pre class="prettyprint">WeatherRequest req = new WeatherRequest(cityId);<br></pre>
+<br>
+Now we have the request, we can query the current weather. As always, our
+weatherClient object must be correctly instantiated and configured.
+The method to use to get the weather is:
+<br>
+<br>
+<pre class="prettyprint">   weatherClient.getCurrentCondition(req, new WeatherClient.WeatherEventListener() {<br>            @Override<br>            public void onWeatherRetrieved(CurrentWeather cWeather) {<br>                Weather weather = cWeather.weather;<br>		// The weather condition object is ready and we can use it <br>           }<br><br>            @Override<br>            public void onWeatherError(WeatherLibException t) {<br>                // Something went wrong maybe we should inform the user<br>            }<br><br>            @Override<br>            public void onConnectionError(Throwable t) {<br>               // There was a connection error<br>            }<br>        });<br></pre>
+<br>
+<br>
+As you can see it is very simple, we have to provide a listener so that we get informed
+when the weather data is ready.
+<br>
+The <code>onWeatherRetrieved(CurrentWeather cWeather)</code> is called as soon as the data
+is ready. <br/>
+We can use <em>CurrentWeather</em> to get the <strong>current weather condition</strong>. 
+This class holds <em>WeatherUnit</em> that is filled with the unit measure system retrieved
+from the <strong>weather provider</strong>.
+<em>Weather</em> class hold all the information about current weather.
+Weather is built as:
+<pre class="prettyprint">
+public class Weather {
+    public Location location = new Location();
+    public Condition currentCondition = new Condition();
+    public Temperature temperature = new Temperature();
+    public Wind wind = new Wind();
+    public Rain[] rain = {new Rain(), new Rain()};
+    public Snow snow = new Snow();
+    public Clouds clouds = new Clouds();
+..
+}
+</pre>
+<br/>
+As you can see there are all <strong>weather information in the Android app</strong>
+<br/>
+For example, in the <code>onWeatherRetrieved</code> in your <strong>Android weather app</strong>, you
+should fill your <strong>Android UI app</strong>:
+<pre class="prettyprint">
+weatherClient.getCurrentCondition(req, new WeatherClient.WeatherEventListener() {
+            @Override
+            public void onWeatherRetrieved(CurrentWeather cWeather) {
+                Weather weather = cWeather.weather;
+                getListener().requestCompleted();
+                cityText.setText(weather.location.getCity() + "," + weather.location.getCountry());
+                condDescr.setText(weather.currentCondition.getCondition() + "(" + weather.currentCondition.getDescr() + ")");
+                LogUtils.LOGD("SwA", "Temp [" + temp + "]");
+                LogUtils.LOGD("SwA", "Val [" + weather.temperature.getTemp() + "]");
+                temp.setText("" + ((int) weather.temperature.getTemp()));
+                unitTemp.setText(cWeather.getUnit().tempUnit);
+                colorTextLine.setBackgroundResource(WeatherUtil.getResource(weather.temperature.getTemp(), config));
+                hum.setText(weather.currentCondition.getHumidity() + "%");
+                tempMin.setText(weather.temperature.getMinTemp() + cWeather.getUnit().tempUnit);
+                tempMax.setText(weather.temperature.getMaxTemp() + cWeather.getUnit().tempUnit);
+                windSpeed.setText(weather.wind.getSpeed() + cWeather.getUnit().speedUnit);
+                windDeg.setText((int) weather.wind.getDeg() + "° (" + WindDirection.getDir((int) weather.wind.getDeg()) + ")");
+                press.setText(weather.currentCondition.getPressure() + cWeather.getUnit().pressureUnit);
+
+                sunrise.setText(WeatherUtil.convertDate(weather.location.getSunrise()));
+
+                sunset.setText(WeatherUtil.convertDate(weather.location.getSunset()));
+                ....
+             }
+}
+</pre>
+<br/>
+You should notice, that some fields could be null depending on the <em>weather provider</em>.
+

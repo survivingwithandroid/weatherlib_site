@@ -1,0 +1,128 @@
+---
+layout: weather_layout
+backPage: Home
+backPageLink: ./index.html
+nextPage: Documentation
+nextPageLink: search_city.html
+bgColor: 4CAF50
+title: Getting started
+descr: "Do you want to develop an android weather app?. Read this tutorial and you can find all the information to create and android app. Here you can find source code about android weather"
+---
+          
+<h3 id="starthere">Getting started</h3>
+
+                         
+                        
+			
+			
+<p>
+			 To create a WeatherClient we need a few lines. The WeatherClient must be used to get weather information.</p>
+
+			 
+<p>The first thing, we have to instantiate the builder. The builder is used to create the client:</p>
+
+			 
+<pre class="prettyprint">WeatherClient.ClientBuilder builder = new WeatherClient.ClientBuilder();</pre>
+
+			 
+<p>then we have to instantiate the WeatherConfig. If you instantiate a WeatherConfig without setting parameters, 
+the default paramters will be used. The WeatherConfig is a class that is used to control the general behaviour of the client. 
+Using this class, you can set if the metric or imperial system must be used or the number of days in the forecast.
+By now we can simply instantiate the class without setting parameters so that the default values will be used.</p>
+
+			 
+<pre class="prettyprint">WeatherConfig config = new WeatherConfig();</pre>
+
+			 
+<p>Now we can create our client and the weather information. As explained before, other than the configuration we have to
+specify the transport library we want to used and the weather provider. For example:</p>
+
+			 
+<pre class="prettyprint">WeatherClient client = builder.attach(getActivity())<br>            .provider(new ForecastIOProviderType())<br>            .httpClient(com.survivingwithandroid.weather.lib.client.okhttp.WeatherDefaultClient.class)<br>            .config(config)<br>            .build();</pre>
+
+			
+<p>
+			In this new way we use a builder to create the <code>Weatherclient</code>.
+At line 2, we set the Weather provider: as you already know there are
+four different weather provider supported by now by the lib:</p>
+
+			
+<ul>
+
+			  <li>Openweathermap -&gt; <code>OpenweathermapProviderType</code></li>
+			  <li>Yahoo! Weather -&gt; <code>YahooWeatherProviderType</code></li>
+			  <li>Weatherundergroung -&gt; <code>WeatherundergroundProviderType</code></li>
+			  <li>Forecast.io -&gt; <code>ForecastIOProviderType</code></li>
+			
+</ul>
+
+			
+<p> At line 3 we set the HTTP client that the library uses to connect
+to the remote server: there a three different clients supported by the
+lib:</p>
+
+			
+<ul>
+
+               <li><a href="https://android.googlesource.com/platform/frameworks/volley" target="_blank">Volley Client</a> -&gt; <code>com.survivingwithandroid.weather.lib.client.volley.WeatherClientDefault</code></li> (available from 1.0 version)
+			   <li><a href="http://square.github.io/okhttp/" target="_blank">OkHttp Client</a> -&gt; <code>com.survivingwithandroid.weather.lib.client.okhttp.WeatherClientDefault</code></li> (available from 1.5 version)
+			   <li>Standard client -&gt; <code>com.survivingwithandroid.weather.lib.StandardHttpClient</code></li> (available from 1.0 version)
+			
+</ul>
+
+			
+<p>
+			<strong>One important aspect we must notice is that the first two client are asynchronous client, while the last one is synchronous.</strong>
+			</p>
+<p>In the build.gradle we have to add dependecies, according to the type of the client you choosed</p>
+
+			
+			
+<div class="panel panel-info">
+			  <div class="panel-heading"><h4 class="panel-title">Volley HTTP Library</h4></div>
+			  <p>
+			    </p><pre class="prettyprint">dependencies {					<br>	compile 'com.survivingwithandroid:weatherlib:1.5.4'<br>	compile 'com.survivingwithandroid:weatherlib_volleyclient:1.5.4'<br>	compile 'com.mcxiaoke.volley:library:1.0.6@aar' (or whatever you like)<br>}<br></pre>
+			  
+			</div>
+<div class="panel panel-info"><div class="panel-heading"><h4 class="panel-title">OkHttp HTTP Library</h4></div>
+			  <p>
+			    </p><pre class="prettyprint">dependencies {					<br>	compile 'com.survivingwithandroid:weatherlib:1.5.4'<br>	compile 'com.survivingwithandroid:weatherlib_okhttpclient:1.5.4'<br>	compile 'com.squareup.okhttp:okhttp:2.0.+'<br>}<br></pre>
+			  
+			</div>
+<div class="panel panel-info"><div class="panel-heading"><h4 class="panel-title">Standard client</h4></div>
+			  <p>
+			    </p><pre class="prettyprint">dependencies {					<br>	compile 'com.survivingwithandroid:weatherlib:1.5.4'	<br>}<br></pre>	
+			  
+			</div>
+
+
+		
+<h3>Configuration</h3>
+
+			
+<p>
+		Going deeper into the configuration, we can configure our client using <code>WeatherConfig</code> attribute, as shown below:</p>
+
+			
+<pre class="prettyprint">WeatherConfig config = new WeatherConfig();<br>config.unitSystem = WeatherConfig.UNIT_SYSTEM.M;<br>config.lang = "en"; // If you want to use english<br>config.maxResult = 5; // Max number of cities retrieved<br>config.numDays = 6; // Max num of days in the forecast<br>	</pre>
+
+			
+<p>We can change the configuration paramter without rebuilding the client, but we have to update the configuration in our client and provider using <code>updateWeatherConfig</code> and passing the new configuration:</p>
+
+			
+<pre class="prettyprint">client.updateWeatherConfig(config);	</pre>
+
+	
+<h3>Permissions in Manifest</h3>
+		
+<p>One aspect we have to consider is the permission in <code>Manifest.xml</code> so that the lib can connect to internet and use GPS device if you need:</p>
+<pre class="prettyprint">
+    &lt;uses-permission android:name="android.permission.INTERNET" /&gt;
+    &lt;uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /&gt;
+</pre>
+
+<h3>Simple Weatherlib activity sample</h3>
+<p>If you want to go and use the lib directly here there is an example that shows how to create an Activity that gets current weather information</p>
+<p>
+<script src="https://gist.github.com/survivingwithandroid/d671961572899cb8f4b4.js"></script>
+</p>

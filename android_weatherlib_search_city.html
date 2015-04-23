@@ -1,0 +1,105 @@
+---
+layout: weather_layout
+backPage: Getting started
+backPageLink: start.html
+nextPage: Get current weather
+nextPageLink: current_weather.html
+bgColor: 3F51B5
+title: Search city
+topic: Search city
+descr: "To develop an android app you have to add search city feature in your android ui so that user can get weather information
+for the city. Here you can find the tutorial how to develop an ui to search for a city using geo coordinates (latitude and longitude) with GPS or city id using name pattern"
+---
+
+<h2>Introduction</h2>
+Once you created the weather client you are ready to get weather
+information. You have different ways to<br>
+get weather information:<br>
+<ul>
+  <li>By city id</li>
+  <li>By latitude and longitude <br>
+  </li>
+</ul>
+The city id is the unique city identification used by the weather
+provider. Each weather provider has its city <br>
+identification, while if you use the coords they are the same.<br>
+When you use the city id you have to look for it using the search
+method. WeatherLib supports also the city search and we will discover
+it later.<br>
+All the methods used to get weather information (current, forecast and
+so on), accept <code>WeatherRequest.</code><br>
+This class has two constructor: one that accepts the city id and the
+other one that accepts the lat and long.<br>
+The library will create the right URL depending on the parameter you
+used (city id or coords).<br>
+Let make an example, suppose we want to get the weather information for
+NY using the coords, we can create the request in this way:<br>
+<pre class="prettyprint">WeatherRequest req = new WeatherRequest(40.716667F, -74F);<br></pre>
+<br>
+if we want to get the weather information in London, UK we can use:
+<pre class="prettyprint">WeatherRequest req = new WeatherRequest(2643743);<br></pre>
+<br/>
+The <em>Search city</em> features is supported by:<br/><br/>
+    <table class="table_support">
+      <tr> 
+        <td><strong>Openweathermap</strong></td>
+        <td><font class="ok_support">Yes</font></td>
+      </tr>
+      <tr>
+        <td><strong>Weatherunderground<br/>Weather.com</strong></td>
+         <td><font class="ok_support">Yes</font></td>
+      </tr>
+      <tr>
+        <td><strong>Yahoo! Weather</strong></td>
+        <td><font class="ok_support">Yes</font></td>
+      </tr>
+      <tr>
+        <td><strong>Forecast.io</strong></td>
+         <td><font class="ok_support">Yes</font></td>
+      </tr>
+    </table>
+
+<h2>Search for a city</h2>
+Usually in a weather app, one of its feature is letting the user to
+search for the city.
+Weatherlib helps you searching the city passing a city pattern name:
+<pre class="prettyprint">weatherClient.searchCity(s.toString(), new WeatherClient.CityEventListener() {<br>   @Override<br>   public void onCityListRetrieved(List<city> cities) {<br>      // The data is ready<br>   }<br>  <br>   @Override<br>   public void onWeatherError(WeatherLibException e) {<br>      // Error on geting data<br>   }<br><br>   @Override<br>   public void onConnectionError(Throwable throwable) {<br>      // Connection error<br>   }<br>});<br></city></pre>
+<p>where weatherClient is created in the way shown before</p>
+<p>As you can notice, we can search a city passing a name pattern and
+invoking the method
+<code>searchCity</code>. All the methods in the libray have a listener
+that is used to notify the
+caller that the data from weather provider are ready. In this case we
+have to use <code>CityEventListener</code> that has three methods:
+</p>
+<ul>
+  <li><code>onCityListRetrieved</code> that is called when the data is
+available</li>
+  <li><code>onWeatherError</code> that is called when there is an error
+parsing the data</li>
+  <li><code>onConnectionError</code> that is called when there is a
+connection error</li>
+</ul>
+<p>
+The most interesting method is the first one that returns a List of
+City instance. One attribute
+of this class is the <code>id</code> that is the unique city
+indentifier. The <code>City</code> holds
+other attributes like the region name and the country. It holds also
+the long and lat.
+The <code>onCityListRetrieved</code> method is the right place if you
+want to create an adapter to fill a ListView for example so that the
+user can select the city.</p>
+<p>There are other two different ways to search for&nbsp; a city id:</p>
+<ul>
+  <li>Using <span style="font-weight: bold;">latitude</span> and <span style="font-weight: bold;">logitude</span></li>
+  <li>Using Android Criteria <a href="http://developer.android.com/reference/android/location/Criteria.html" target="_blank"><br>
+    </a></li>
+</ul>
+If you want to search using lat and long coords, you have to use:<br>
+<br>
+<pre class="prettyprint">searchCity(double lat, double lon, CityEventListener listener)<br></pre>
+<br>
+If you want to use <code>Criteria</code> you should provide your search location criteria (see Android docs).
+Weatherlib provides a default Criteria implementation:
+<pre class="prettyprint">public static Criteria createDefaultCriteria() {<br>   Criteria criteria = new Criteria();<br>   criteria.setPowerRequirement(Criteria.POWER_LOW);<br>   criteria.setAccuracy(Criteria.ACCURACY_COARSE);<br>   criteria.setCostAllowed(false);<br>}<br></pre>
