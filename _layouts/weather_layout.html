@@ -3,7 +3,7 @@
   
   {% include header.html %}
 
-   <body data-target=".content-nav" >
+   <body data-target=".content-nav"  >
 
 
     <header style="background-color:#{{ page.bgColor }}">
@@ -42,6 +42,18 @@
 
 <section id="body">
 <div class="container">
+
+<div class="row">
+
+<span class='st_sharethis_large' displayText='ShareThis'></span>
+<span class='st_googleplus_large' displayText='Google +'></span>
+<span class='st_facebook_large' displayText='Facebook'></span>
+<span class='st_twitter_large' displayText='Tweet'></span>
+<span class='st_linkedin_large' displayText='LinkedIn'></span>
+<span class='st_dzone_large' displayText='DZone'></span>
+<span class='st_email_large' displayText='Email'></span>
+</div>
+
 <div class="row">
 <div class="span12"> 
 <br/><br/></br/>{{ content }} </div>
@@ -60,6 +72,28 @@
 </ul>
 </div>
 <div>
+
+<!-- Disquss -->
+<div class="container">
+    <div class="row">
+    <div class="span10"> 
+              <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                /* * * CONFIGURATION VARIABLES * * */
+                var disqus_shortname = 'weatherlib';
+                
+                /* * * DON'T EDIT BELOW THIS LINE * * */
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+            </div>
+     </div>
+</div>
+<!-- End disquess -->
 <div class="row">
 <div class="span12">&nbsp;</div>
 </div>
